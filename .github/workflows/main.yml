@@ -23,7 +23,7 @@ jobs:
 
       - name: Run Fortune Cookie and save output
         run: |
-          output="123333/n456123"
+          output=$(python printTest.py)
           echo "==================================== Output ===================================="
           echo "$output"
           echo "================================================================================"
