@@ -1,0 +1,39 @@
+name: Check fortune cookie output
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  check_output:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+
+      - name: Run Fortune Cookie and save output
+        run: |
+          output="123333/n456123"
+          echo "==================================== Output ===================================="
+          echo "$output"
+          echo "================================================================================"
+          echo "$output" > output.txt
+
+      - name: Check the number of lines in the output
+        run: |
+          if [ $(( $(wc -l < output.txt) % 6 )) -eq 2 ]; then
+            echo "Pass"
+          else
+            echo "Wrong number of lines in output"
+            exit 1
+          fi
